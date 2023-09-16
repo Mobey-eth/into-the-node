@@ -13,6 +13,7 @@ const fs = require("fs");
 //   console.log("Writing file");
 // });
 // directories
+
 let count = 0;
 while (count < 2) {
   if (!fs.existsSync("./assets")) {
@@ -39,4 +40,4 @@ fs.unlink("./docs/test2.txt", (err) => {
     console.log(err);
   }
 });
-// console.log("last Line"); --reading files is asynchronous my love
+console.log("last Line"); // --reading files is asynchronous my love
