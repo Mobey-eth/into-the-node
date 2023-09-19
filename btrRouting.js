@@ -13,8 +13,10 @@ const server = http.createServer((req, res) => {
 
   if (routes.hasOwnProperty(req.url)) {
     path += routes[req.url];
+    res.statusCode = 200;
   } else {
     path += routes.error404;
+    res.statusCode = 404;
   }
 
   fs.readFile(path, (err, data) => {
@@ -23,6 +25,7 @@ const server = http.createServer((req, res) => {
       res.end();
     } else {
       // res.write(); used for writing multiple things, instead of one
+      // res.statusCode(200); // set inside the response onbject
       res.end(data);
     }
   });
