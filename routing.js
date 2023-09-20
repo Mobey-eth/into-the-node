@@ -1,9 +1,14 @@
 const http = require("http");
 const fs = require("fs");
+const _ = require("lodash");
 
 const server = http.createServer((req, res) => {
   // console.log(req);
-  console.log(req.url, req.method);
+  // console.log(req.url, req.method);
+
+  // lodash
+  let num = _.random(0, 30);
+  console.log(num);
 
   // set header content type
   res.setHeader("content-Type", "text, html");
@@ -18,8 +23,8 @@ const server = http.createServer((req, res) => {
       break;
     // for redirections and status codes
     case "/about-us":
-      res.statusCode = 301;
-      res.setHeader("Location", "./views/about");
+      res.statusCode = 302;
+      res.setHeader("Location", "/about");
       res.end();
       break;
     default:
