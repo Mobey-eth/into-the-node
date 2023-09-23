@@ -1,4 +1,7 @@
 const express = require("express");
+// to use 3rd party middleware
+
+const morgan = require("morgan");
 
 // express app
 const app = express();
@@ -10,6 +13,18 @@ app.set("view engine", "ejs");
 // listen for requests
 
 app.listen(3000);
+
+// app.use((req, res, next) => {
+//   console.log("New request made:");
+//   console.log("host:", req.hostname);
+//   console.log("path:", req.path);
+//   console.log("method:", req.method);
+//   next();
+// }); // express hangs because it doest know how to move on so we use next().
+
+// 3RD PARTY MIDDLEWARE
+app.use(express.static("public"));
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   // res.send("<p>Home Page</p>");
