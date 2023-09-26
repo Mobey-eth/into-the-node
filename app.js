@@ -2,17 +2,27 @@ const express = require("express");
 // to use 3rd party middleware
 
 const morgan = require("morgan");
+const mongoose = require("mongoose");
+const Blog = require("./models/blog");
 
 // express app
 const app = express();
 
+// mongoURI
+const dbURI =
+  "mongodb+srv://mobiLearn:12345@cluster0.cywvpnk.mongodb.net/node-tuts?retryWrites=true&w=majority&appName=AtlasApp";
+mongoose
+  .connect(dbURI)
+  .then((result) => {
+    console.log("Connected to DB");
+    // listen for requests
+    app.listen(3000);
+  })
+  .catch((err) => console.log(err));
+
 // register view engine
 app.set("view engine", "ejs");
 // app.set("views", "mobiViews"); // to set custom views path
-
-// listen for requests
-
-app.listen(3000);
 
 // app.use((req, res, next) => {
 //   console.log("New request made:");
@@ -25,6 +35,48 @@ app.listen(3000);
 // 3RD PARTY MIDDLEWARE
 app.use(express.static("public"));
 app.use(morgan("dev"));
+
+// mongoose and mongo sandbox routes
+app.get("/add-blog", (req, res) => {
+  const blog = new Blog({
+    title: "Newer Blog2",
+    snippet: "About my newer blog",
+    body: "Even more about my newer blog",
+  });
+
+  // to save it
+  blog
+    .save()
+    .then((result) => {
+      console.log("Save success toast");
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// to retrieve all blogs
+app.get("/all-blogs", (req, res) => {
+  Blog.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// to retrieve single blog
+app.get("/single-blog", (req, res) => {
+  Blog.findById("6512a9b8f6a62218630dee0a")
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 app.get("/", (req, res) => {
   // res.send("<p>Home Page</p>");
