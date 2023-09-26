@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MOby Init | <%= title %></title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="site-title">
+        <a href="/">Homepage</a>
+        <p>Moby Test site for express</p>
+      </div>
+      <ul>
+        <li><a href="/" style="margin: 20px">Blogs</a></li>
+        <li><a href="/about" style="margin: 20px">About </a></li>
+        <li><a href="/blogs/create" style="margin: 20px">New Blog</a></li>
+      </ul>
+    </nav>
+    <div class="create-blog content">
+      <form>
+        <label for="title">Blog Title:</label>
+        <input type="text" id="title" required autofocus />
+        <label for="snippet">Blog Snippet:</label>
+        <input type="text" id="snippet" required />
+        <label for="body">Blog Body:</label>
+        <textarea
+          name="BlogBody"
+          id="body"
+          required
+          placeholder="Input Blog Body..."
+          cols="30"
+          rows="10"
+          maxlength="200"
+        ></textarea>
+        <button>Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
