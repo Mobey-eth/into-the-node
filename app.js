@@ -4,13 +4,14 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const Blog = require("./models/blog");
+require("dotenv").config();
 
 // express app
 const app = express();
 
 // mongoURI
-const dbURI =
-  "mongodb+srv://mobiLearn:12345@cluster0.cywvpnk.mongodb.net/node-tuts?retryWrites=true&w=majority&appName=AtlasApp";
+const dbURI = process.env.DBURI;
+
 mongoose
   .connect(dbURI)
   .then((result) => {
