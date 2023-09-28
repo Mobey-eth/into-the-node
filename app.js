@@ -38,50 +38,52 @@ app.use(express.static("public"));
 app.use(morgan("dev"));
 
 // mongoose and mongo sandbox routes
-app.get("/add-blog", (req, res) => {
-  const blog = new Blog({
-    title: "Newer Blog2",
-    snippet: "About my newer blog",
-    body: "Even more about my newer blog",
-  });
+// app.get("/add-blog", (req, res) => {
+//   const blog = new Blog({
+//     title: "Newer Blog2",
+//     snippet: "About my newer blog",
+//     body: "Even more about my newer blog",
+//   });
 
-  // to save it
-  blog
-    .save()
-    .then((result) => {
-      console.log("Save success toast");
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+//   // to save it
+//   blog
+//     .save()
+//     .then((result) => {
+//       console.log("Save success toast");
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
-// to retrieve all blogs
-app.get("/all-blogs", (req, res) => {
-  Blog.find()
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// // to retrieve all blogs
+// app.get("/all-blogs", (req, res) => {
+//   Blog.find()
+//     .then((result) => {
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
-// to retrieve single blog
-app.get("/single-blog", (req, res) => {
-  Blog.findById("6512a9b8f6a62218630dee0a")
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+// // to retrieve single blog
+// app.get("/single-blog", (req, res) => {
+//   Blog.findById("6512a9b8f6a62218630dee0a")
+//     .then((result) => {
+//       res.send(result);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 
 app.get("/", (req, res) => {
   // res.send("<p>Home Page</p>");
-
+  res.redirect("/blogs");
+  /**
+   * 
   const blogs = [
     {
       title: "Moby is a Whale",
@@ -98,6 +100,7 @@ app.get("/", (req, res) => {
   ];
 
   res.render("index", { title: "Home Page", blogs });
+   */
 });
 
 app.get("/about", (req, res) => {
@@ -105,7 +108,18 @@ app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
-// redirects
+// redirects --blog routes
+
+app.get("/blogs", (req, res) => {
+  Blog.find()
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      res.render("index", { title: "All Blogs", blogs: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create" });
